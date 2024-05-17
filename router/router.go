@@ -3,6 +3,7 @@ package router
 import (
 	"fmt"
 	"log"
+	authhandler "online-store/handler/auth_handler"
 	categoryproducthandler "online-store/handler/category_product_handler"
 	producthandler "online-store/handler/product_handler"
 	"os"
@@ -37,11 +38,12 @@ func Routes() *gin.Engine {
 
 	v3noauth := r.Group("/v1")
 
-	// auth := v3noauth.Group("/auth")
-	// {
-	// 	auth.POST("/register", authhandler.RegisterVendorAccount)
-	// 	auth.POST("/login", authhandler.LoginVendorAccount)
-	// }
+	auth := v3noauth.Group("/auth")
+	{
+		auth.POST("/register-customer", authhandler.RegisterCustomer)
+		auth.POST("/register-admin", authhandler.RegisterAdmin)
+		// auth.POST("/login", authhandler.LoginVendorAccount)
+	}
 
 	categoryProduct := v3noauth.Group("/category")
 	{

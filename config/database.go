@@ -16,7 +16,7 @@ import (
 )
 
 type DB struct {
-	MySql  *sqlx.DB
+	Sql  *sqlx.DB
 	GormDB *gorm.DB
 }
 
@@ -51,7 +51,7 @@ func Init() *DB {
 		log.Fatalln(err)
 	}
 
-	DbConn.MySql = db
+	DbConn.Sql = db
 
 	config, err := pgx.ParseConfig(psql)
 	if err != nil {

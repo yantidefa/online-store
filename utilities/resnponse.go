@@ -8,15 +8,18 @@ type Response struct {
 	Msg  string      `json:"message"`
 }
 
-func SetResponseJSON(c *gin.Context, code int, data interface{}, msg string) {
-
+func SetResponseJSON(c *gin.Context, code int, data interface{}, msg string, err error) {
 	response := Response{
 		Code: code,
 		Data: data,
-		Msg:  msg,
 	}
 
-	c.JSON(code,
-		response)
+	if err != nil {
+		response.Msg = msg + " " + err.Error()
+	} else {
+		response.Msg = msg
+	}
+
+	c.JSON(code, response)
 	c.Abort()
 }
