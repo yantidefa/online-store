@@ -42,7 +42,7 @@ func Routes() *gin.Engine {
 	{
 		auth.POST("/register-customer", authhandler.RegisterCustomer)
 		auth.POST("/register-admin", authhandler.RegisterAdmin)
-		// auth.POST("/login", authhandler.LoginVendorAccount)
+		auth.POST("/login", authhandler.Login)
 	}
 
 	categoryProduct := v3noauth.Group("/category")

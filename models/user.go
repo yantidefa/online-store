@@ -17,3 +17,7 @@ type User struct {
 	UpdatedAt *string   `json:"updated_at"`
 	DeletedAt *string   `json:"deleted_at"`
 }
+type Login struct {
+	Email     string    `json:"email"`
+	Password  string    `json:"password"`
+}

@@ -40,3 +40,18 @@ func RegisterAdmin(c *gin.Context) {
 		utilities.SetResponseJSON(c, http.StatusOK, data, constants.SuccessAddData, err)
 	}
 }
+func Login(c *gin.Context) {
+	var request models.Login
+	if err := c.ShouldBindJSON(&request); err != nil {
+		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
+		return
+	}
+
+	data, err := authservice.Login(request)
+	if err != nil {
+		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
+		return
+	} else {
+		utilities.SetResponseJSON(c, http.StatusOK, data, constants.SuccessAddData, err)
+	}
+}

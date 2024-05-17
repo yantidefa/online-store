@@ -27,3 +27,31 @@ func RegisterAdmin(request models.User) (*models.User, error) {
 
 	return createUser, nil
 }
+
+func Login(request models.Login) (*models.GenerateJWT, error) {
+	dataUser, err := usersrepository.GetUser("", request.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	jwt := models.GenerateJWT{
+		UserId: dataUser.ID.String(),
+		Name:   dataUser.Name,
+		Email:  dataUser.Email,
+		Role:   dataUser.Role,
+	}
+
+	tokenString, _, err := utilities.GenerateJWT(&jwt)
+	if err != nil {
+		return nil, err
+	}
+
+	_, errUserIsLogin := usersrepository.ChangeIsLogin(dataUser.ID.String(), tokenString)
+	if errUserIsLogin != nil {
+		return nil, errUserIsLogin
+	}
+
+	jwt.Token = tokenString
+
+	return &jwt, nil
+}
