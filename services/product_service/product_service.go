@@ -14,20 +14,11 @@ func CreateProduct(request models.Product) (*models.Product, error) {
 	return createProduct, nil
 }
 
-func GetAllProduct(categoryId, categoryName string) (*[]models.Product, error) {
-	getProduct, err := productrepository.GetAllProduct(categoryId, categoryName)
+func GetProduct(productId, categoryId, categoryName string) ([]*models.Product, error) {
+	getProduct, err := productrepository.GetProduct(productId, categoryId, categoryName)
 	if err != nil {
 		return getProduct, err
 	}
-	return getProduct, nil
-}
-
-func GetProductById(id string) (*models.Product, error) {
-	getProduct, err := productrepository.GetProductById(id)
-	if err != nil {
-		return getProduct, err
-	}
-
 	return getProduct, nil
 }
 

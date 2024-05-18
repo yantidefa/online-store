@@ -14,7 +14,7 @@ func CreateCategoryProduct(request models.CategoryProduct) (*models.CategoryProd
 	return createCategoryProduct, nil
 }
 
-func GetAllCategoryProduct() (*[]models.CategoryProduct, error) {
+func GetAllCategoryProduct() ([]*models.CategoryProduct, error) {
 	getCategoryProduct, err := categoryproductrepository.GetAllCategoryProduct()
 	if err != nil {
 		return getCategoryProduct, err

@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"log"
 	authhandler "online-store/handler/auth_handler"
+	carthandler "online-store/handler/cart_handler"
 	categoryproducthandler "online-store/handler/category_product_handler"
+	paymenthandler "online-store/handler/payment_handler"
 	producthandler "online-store/handler/product_handler"
 	"os"
 
@@ -43,6 +45,7 @@ func Routes() *gin.Engine {
 		auth.POST("/register-customer", authhandler.RegisterCustomer)
 		auth.POST("/register-admin", authhandler.RegisterAdmin)
 		auth.POST("/login", authhandler.Login)
+		auth.POST("/logout", authhandler.Logout)
 	}
 
 	categoryProduct := v3noauth.Group("/category")
@@ -56,11 +59,26 @@ func Routes() *gin.Engine {
 
 	product := v3noauth.Group("/product")
 	{
-		product.GET("/get", producthandler.GetAllProduct)
-		product.GET("/get-by-id", producthandler.GetProductById)
+		product.GET("/get", producthandler.GetProduct)
 		product.DELETE("/delete-by-id", producthandler.DeleteProductById)
 		product.PUT("/update", producthandler.UpdateProductById)
 		product.POST("/create", producthandler.CreateProduct)
+	}
+
+	cart := v3noauth.Group("/cart")
+	{
+		cart.GET("/get", carthandler.GetCart)
+		cart.DELETE("/delete-by-id", carthandler.DeleteCartById)
+		cart.PUT("/update", carthandler.UpdateCartById)
+		cart.POST("/create", carthandler.CreateCart)
+	}
+
+	payment := v3noauth.Group("/payment")
+	{
+		payment.GET("/get", paymenthandler.GetPayment)
+		payment.DELETE("/delete-by-id", paymenthandler.DeletePaymentById)
+		payment.PUT("/update", paymenthandler.UpdatePaymentById)
+		payment.POST("/create", paymenthandler.CreatePayment)
 	}
 
 	return r

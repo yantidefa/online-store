@@ -1,12 +1,22 @@
 package authservice
 
 import (
+	"errors"
+	"online-store/constants"
 	"online-store/models"
 	usersrepository "online-store/repositories/users_repository"
 	"online-store/utilities"
 )
 
 func RegisterCustomer(request models.User) (*models.User, error) {
+	dataUser, err := usersrepository.GetUser("", request.Email)
+	if err != nil {
+		return nil, err
+	}
+	if dataUser.Email == request.Email {
+		return nil, errors.New(constants.ErrExistEmail)
+	}
+
 	request.Token, _ = utilities.HashPassword(request.Password)
 	request.Role = "Customer"
 	createUser, err := usersrepository.CreateUser(request)
@@ -18,6 +28,14 @@ func RegisterCustomer(request models.User) (*models.User, error) {
 }
 
 func RegisterAdmin(request models.User) (*models.User, error) {
+	dataUser, err := usersrepository.GetUser("", request.Email)
+	if err != nil {
+		return nil, err
+	}
+	if dataUser.Email == request.Email {
+		return nil, errors.New(constants.ErrExistEmail)
+	}
+
 	request.Token, _ = utilities.HashPassword(request.Password)
 	request.Role = "Admin"
 	createUser, err := usersrepository.CreateUser(request)
@@ -34,6 +52,10 @@ func Login(request models.Login) (*models.GenerateJWT, error) {
 		return nil, err
 	}
 
+	if dataUser.Password != request.Password {
+		return nil, errors.New(constants.ErrPassword)
+	}
+
 	jwt := models.GenerateJWT{
 		UserId: dataUser.ID.String(),
 		Name:   dataUser.Name,
@@ -46,7 +68,7 @@ func Login(request models.Login) (*models.GenerateJWT, error) {
 		return nil, err
 	}
 
-	_, errUserIsLogin := usersrepository.ChangeIsLogin(dataUser.ID.String(), tokenString)
+	_, errUserIsLogin := usersrepository.ChangeIsLogin(dataUser.ID.String(), tokenString, true)
 	if errUserIsLogin != nil {
 		return nil, errUserIsLogin
 	}
@@ -54,4 +76,18 @@ func Login(request models.Login) (*models.GenerateJWT, error) {
 	jwt.Token = tokenString
 
 	return &jwt, nil
+}
+
+func Logout(request models.Login) (int64, error) {
+	dataUser, err := usersrepository.GetUser("", request.Email)
+	if err != nil {
+		return 0, err
+	}
+
+	userIsLogin, errUserIsLogin := usersrepository.ChangeIsLogin(dataUser.ID.String(), dataUser.Token, true)
+	if errUserIsLogin != nil {
+		return userIsLogin, errUserIsLogin
+	}
+
+	return userIsLogin, nil
 }

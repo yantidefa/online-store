@@ -16,14 +16,14 @@ func CreateCategoryProduct(request models.CategoryProduct) (*models.CategoryProd
 	return &request, nil
 }
 
-func GetAllCategoryProduct() (*[]models.CategoryProduct, error) {
-	categories := []models.CategoryProduct{}
+func GetAllCategoryProduct() ([]*models.CategoryProduct, error) {
+	categories := []*models.CategoryProduct{}
 	result := config.DbConn.GormDB.Table("categories").Where("deleted_at IS NULL").Order("created_at DESC").Find(&categories)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 
-	return &categories, nil
+	return categories, nil
 }
 
 func GetCategoryProductById(id string) (*models.CategoryProduct, error) {

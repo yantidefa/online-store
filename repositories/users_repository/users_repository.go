@@ -16,8 +16,8 @@ func CreateUser(request models.User) (*models.User, error) {
 
 	return &request, nil
 }
-func ChangeIsLogin(userId, token string) (int64, error) {
-	queryUpdate := `UPDATE users SET is_login = true, token = $1 WHERE id = $2`
+func ChangeIsLogin(userId, token string, isLogin bool) (int64, error) {
+	queryUpdate := `UPDATE users SET is_login = $1, token = $2 WHERE id = $3`
 	result, sqlError := config.DbConn.Sql.Exec(queryUpdate, token, userId)
 	if sqlError != nil {
 		return 0, sqlError

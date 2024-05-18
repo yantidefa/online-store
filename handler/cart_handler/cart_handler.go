@@ -1,23 +1,23 @@
-package producthandler
+package carthandler
 
 import (
 	"net/http"
 	"online-store/constants"
 	"online-store/models"
-	productservice "online-store/services/product_service"
+	cartservice "online-store/services/cart_service"
 	"online-store/utilities"
 
 	"github.com/gin-gonic/gin"
 )
 
-func CreateProduct(c *gin.Context) {
-	var request models.Product
+func CreateCart(c *gin.Context) {
+	var request models.Cart
 	if err := c.ShouldBindJSON(&request); err != nil {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
 		return
 	}
 
-	data, err := productservice.CreateProduct(request)
+	data, err := cartservice.CreateCart(request)
 	if err != nil {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
 		return
@@ -26,12 +26,12 @@ func CreateProduct(c *gin.Context) {
 	}
 }
 
-func GetProduct(c *gin.Context) {
-	categoryId := c.Query("category_id")
-	categoryName := c.Query("category_name")
-	productId := c.Query("product_id")
+func GetCart(c *gin.Context) {
+	userId := c.Query("user_id")
+	ProductId := c.Query("product_id")
+	CartId := c.Query("Cart_id")
 
-	data, err := productservice.GetProduct(categoryId, productId, categoryName)
+	data, err := cartservice.GetCart(CartId, ProductId, userId)
 	if err != nil {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedDisplayedData, err)
 	} else {
@@ -39,9 +39,9 @@ func GetProduct(c *gin.Context) {
 	}
 }
 
-func DeleteProductById(c *gin.Context) {
+func DeleteCartById(c *gin.Context) {
 	id := c.Query("id")
-	data, err := productservice.DeleteProductById(id)
+	data, err := cartservice.DeleteCartById(id)
 	if err != nil {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedDisplayedData, err)
 	} else {
@@ -49,14 +49,14 @@ func DeleteProductById(c *gin.Context) {
 	}
 }
 
-func UpdateProductById(c *gin.Context) {
-	var request models.Product
+func UpdateCartById(c *gin.Context) {
+	var request models.Cart
 	if err := c.ShouldBindJSON(&request); err != nil {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
 		return
 	}
 
-	data, err := productservice.UpdateProductById(request)
+	data, err := cartservice.UpdateCartById(request)
 	if err != nil {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedUpdateData, err)
 		return
