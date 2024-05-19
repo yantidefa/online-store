@@ -594,18 +594,8 @@
 							],
 							"query": [
 								{
-									"key": "payment_id",
-									"value": null,
-									"disabled": true
-								},
-								{
 									"key": "user_id",
 									"value": "6e1c5a1e-d9f7-4383-ab87-87317856de94"
-								},
-								{
-									"key": "product_id",
-									"value": null,
-									"disabled": true
 								}
 							]
 						}
@@ -644,6 +634,14 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
