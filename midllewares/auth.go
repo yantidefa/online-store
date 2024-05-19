@@ -13,7 +13,6 @@ import (
 func AuthenticationCustomer() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
-		log.Println(tokenString)
 		if tokenString == "" {
 			utilities.SetResponseJSON(c, http.StatusUnauthorized, nil, constants.ErrEmptyAuthHeader, nil)
 			c.Abort()

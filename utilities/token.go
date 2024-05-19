@@ -76,6 +76,7 @@ func GenerateJWT(Auth *models.GenerateJWT) (tokenString string, expiredTime stri
 		ID:    Auth.UserId,
 		Name:  Auth.Name,
 		Email: Auth.Email,
+		Role:  Auth.Role,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},

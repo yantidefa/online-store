@@ -18,7 +18,7 @@ func CreateUser(request models.User) (*models.User, error) {
 }
 func ChangeIsLogin(userId, token string, isLogin bool) (int64, error) {
 	queryUpdate := `UPDATE users SET is_login = $1, token = $2 WHERE id = $3`
-	result, sqlError := config.DbConn.Sql.Exec(queryUpdate, token, userId)
+	result, sqlError := config.DbConn.Sql.Exec(queryUpdate, isLogin, token, userId)
 	if sqlError != nil {
 		return 0, sqlError
 	}
