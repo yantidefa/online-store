@@ -8,7 +8,7 @@ This project is a test challenge for becoming a Backend Engineer at PT. Synapsis
 
 - [Installation](#installation)
 - [Migration](#migration)
-- [Usage](#usage)
+- [Running](#running)
 
 ## Installation
 
@@ -43,7 +43,5 @@ goose postgres "user=postgres dbname=online-store host=localhost port=5432 sslmo
 ### Down Migration
 goose postgres "user=postgres dbname=online-store host=localhost port=5432 sslmode=disable" down
 
-## Usage
-
 # Running the project
-./yourproject
+go run main.go
