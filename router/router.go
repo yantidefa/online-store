@@ -8,6 +8,7 @@ import (
 	categoryproducthandler "online-store/handler/category_product_handler"
 	paymenthandler "online-store/handler/payment_handler"
 	producthandler "online-store/handler/product_handler"
+	"online-store/midllewares"
 	"os"
 
 	"github.com/gin-contrib/cors"
@@ -48,7 +49,7 @@ func Routes() *gin.Engine {
 		auth.POST("/logout", authhandler.Logout)
 	}
 
-	categoryProduct := v3noauth.Group("/category")
+	categoryProduct := v3noauth.Group("/category").Use(midllewares.AuthenticationAdmin())
 	{
 		categoryProduct.GET("/get", categoryproducthandler.GetCategoryProductAll)
 		categoryProduct.GET("/get-by-id", categoryproducthandler.GetCategoryProductById)
@@ -57,15 +58,15 @@ func Routes() *gin.Engine {
 		categoryProduct.POST("/create", categoryproducthandler.CreateCategoryProduct)
 	}
 
-	product := v3noauth.Group("/product")
+	product := v3noauth.Group("/product").Use(midllewares.AuthenticationAdmin())
 	{
-		product.GET("/get", producthandler.GetProduct)
 		product.DELETE("/delete-by-id", producthandler.DeleteProductById)
 		product.PUT("/update", producthandler.UpdateProductById)
 		product.POST("/create", producthandler.CreateProduct)
 	}
+	product.GET("/get", producthandler.GetProduct)
 
-	cart := v3noauth.Group("/cart")
+	cart := v3noauth.Group("/cart").Use(midllewares.AuthenticationCustomer())
 	{
 		cart.GET("/get", carthandler.GetCart)
 		cart.DELETE("/delete-by-id", carthandler.DeleteCartById)
@@ -73,7 +74,7 @@ func Routes() *gin.Engine {
 		cart.POST("/create", carthandler.CreateCart)
 	}
 
-	payment := v3noauth.Group("/payment")
+	payment := v3noauth.Group("/payment").Use(midllewares.AuthenticationCustomer())
 	{
 		payment.GET("/get-by-user-id", paymenthandler.GetPaymentByUserId)
 		payment.DELETE("/delete-by-id", paymenthandler.DeletePaymentById)

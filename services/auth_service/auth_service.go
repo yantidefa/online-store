@@ -12,7 +12,7 @@ func RegisterCustomer(request models.User) (*models.User, error) {
 	request.Token, _ = utilities.HashPassword(request.Password)
 	request.Role = "Customer"
 	var createUser *models.User
-	_, err := usersrepository.GetUser("", request.Email)
+	_, err := usersrepository.GetUser("", request.Email, "")
 	if err != nil {
 		createUser, err = usersrepository.CreateUser(request)
 		if err != nil {
@@ -26,7 +26,7 @@ func RegisterCustomer(request models.User) (*models.User, error) {
 }
 
 func RegisterAdmin(request models.User) (*models.User, error) {
-	dataUser, err := usersrepository.GetUser("", request.Email)
+	dataUser, err := usersrepository.GetUser("", request.Email, "")
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func RegisterAdmin(request models.User) (*models.User, error) {
 }
 
 func Login(request models.Login) (*models.GenerateJWT, error) {
-	dataUser, err := usersrepository.GetUser("", request.Email)
+	dataUser, err := usersrepository.GetUser("", request.Email, "")
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func Login(request models.Login) (*models.GenerateJWT, error) {
 }
 
 func Logout(request models.Login) (int64, error) {
-	dataUser, err := usersrepository.GetUser("", request.Email)
+	dataUser, err := usersrepository.GetUser("", request.Email, "")
 	if err != nil {
 		return 0, err
 	}

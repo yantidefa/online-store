@@ -70,7 +70,7 @@ func GetPayment(userId string) (*models.Checkout, error) {
 		return nil, err
 	}
 
-	datauser, err := usersrepository.GetUser(userId, "")
+	datauser, err := usersrepository.GetUser(userId, "", "")
 	if err != nil {
 		return nil, err
 	}
