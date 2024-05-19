@@ -35,13 +35,13 @@ go get -u -v
 cd migrations
 
 ### Status Migration
-goose postgres "user=postgres dbname=online-store host=localhost port=5432 sslmode=disable" status
+goose postgres "user=postgres dbname=online_store host=localhost port=5432 password=0303 sslmode=disable" status
 
 ### Up Migration
-goose postgres "user=postgres dbname=online-store host=localhost port=5432 sslmode=disable" up
+goose postgres "user=postgres dbname=online_store host=localhost port=5432 sslmode=disable" up
 
 ### Down Migration
-goose postgres "user=postgres dbname=online-store host=localhost port=5432 sslmode=disable" down
+goose postgres "user=postgres dbname=online_store host=localhost port=5432 sslmode=disable" down
 
 # Running the project
 go run main.go
