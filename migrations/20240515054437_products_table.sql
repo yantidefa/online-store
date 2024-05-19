@@ -7,7 +7,7 @@ CREATE TABLE products (
     name character varying(100) NULL,
     description text NULL,
     stock int DEFAULT 0,
-    price float NULL,
+    price int DEFAULT 0,
     image text NULL,
     created_at timestamp with time zone NULL,
     updated_at timestamp with time zone NULL,

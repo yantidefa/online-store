@@ -9,19 +9,17 @@ import (
 )
 
 func RegisterCustomer(request models.User) (*models.User, error) {
-	dataUser, err := usersrepository.GetUser("", request.Email)
-	if err != nil {
-		return nil, err
-	}
-	if dataUser.Email == request.Email {
-		return nil, errors.New(constants.ErrExistEmail)
-	}
-
 	request.Token, _ = utilities.HashPassword(request.Password)
 	request.Role = "Customer"
-	createUser, err := usersrepository.CreateUser(request)
+	var createUser *models.User
+	_, err := usersrepository.GetUser("", request.Email)
 	if err != nil {
-		return nil, err
+		createUser, err = usersrepository.CreateUser(request)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		return nil, errors.New(constants.ErrExistEmail)
 	}
 
 	return createUser, nil

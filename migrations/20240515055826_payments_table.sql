@@ -6,7 +6,7 @@ CREATE TABLE payments (
     product_id uuid NULL,
     user_id character varying(100) NULL,
     qty int DEFAULT 0,
-    total_price float NULL,
+    price int DEFAULT 0,
     created_at timestamp with time zone NULL,
     updated_at timestamp with time zone NULL,
     deleted_at timestamp with time zone NULL,

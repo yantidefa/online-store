@@ -20,13 +20,13 @@ func GetCart(cartId, productId, userId string) ([]*models.Cart, error) {
 	carts := []*models.Cart{}
 	var queryWhere string
 	if cartId != "" {
-		queryWhere = `id = '` + cartId + `'`
+		queryWhere = `AND id = '` + cartId + `'`
 	} else if userId != "" {
-		queryWhere = `user_id = '` + userId + `'`
+		queryWhere = `AND user_id = '` + userId + `'`
 	} else if productId != "" {
-		queryWhere = `product_id = '` + productId + `'`
+		queryWhere = `AND product_id = '` + productId + `'`
 	}
-	result := config.DbConn.GormDB.Table("carts").Where("deleted_at IS NULL AND " + queryWhere).Order("created_at DESC").Find(&carts)
+	result := config.DbConn.GormDB.Table("carts").Where("deleted_at IS NULL " + queryWhere).Order("created_at DESC").Find(&carts)
 	if result.Error != nil {
 		return nil, result.Error
 	}

@@ -26,12 +26,10 @@ func CreatePayment(c *gin.Context) {
 	}
 }
 
-func GetPayment(c *gin.Context) {
-	categoryId := c.Query("category_id")
-	categoryName := c.Query("category_name")
-	PaymentId := c.Query("Payment_id")
+func GetPaymentByUserId(c *gin.Context) {
+	userId := c.Query("user_id")
 
-	data, err := paymentservice.GetPayment(categoryId, PaymentId, categoryName)
+	data, err := paymentservice.GetPayment(userId)
 	if err != nil {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedDisplayedData, err)
 	} else {
@@ -46,21 +44,5 @@ func DeletePaymentById(c *gin.Context) {
 		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedDisplayedData, err)
 	} else {
 		utilities.SetResponseJSON(c, http.StatusOK, data, constants.SuccessDisplayedData, err)
-	}
-}
-
-func UpdatePaymentById(c *gin.Context) {
-	var request models.Payment
-	if err := c.ShouldBindJSON(&request); err != nil {
-		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
-		return
-	}
-
-	data, err := paymentservice.UpdatePaymentById(request)
-	if err != nil {
-		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedUpdateData, err)
-		return
-	} else {
-		utilities.SetResponseJSON(c, http.StatusOK, data, constants.SuccessUpdateData, err)
 	}
 }

@@ -8,7 +8,7 @@ type Product struct {
 	Name        string    `json:"name" gorm:"column:name"`
 	Description string    `json:"description" gorm:"column:description"`
 	Stock       int       `json:"stock" gorm:"column:stock"`
-	Price       float64   `json:"price" gorm:"column:price"`
+	Price       int   `json:"price" gorm:"column:price"`
 	CreatedAt   *string   `json:"created_at" gorm:"column:created_at"`
 	UpdatedAt   *string   `json:"updated_at" gorm:"column:updated_at"`
 	DeletedAt   *string   `json:"deleted_at" gorm:"column:deleted_at"`

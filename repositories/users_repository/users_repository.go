@@ -35,11 +35,11 @@ func GetUser(userId, Email string) (*models.User, error) {
 	var user models.User
 	var queryWhere string
 	if userId != "" {
-		queryWhere = `id = '` + userId + `'`
+		queryWhere = `AND id = '` + userId + `'`
 	} else if Email != "" {
-		queryWhere = `email = '` + Email + `'`
+		queryWhere = `AND email = '` + Email + `'`
 	}
-	querySelect := `SELECT id, name, email, password, token, is_login, gender, address, phone, role, created_at, updated_at, deleted_at FROM users WHERE deleted_at IS NULL AND ` + queryWhere
+	querySelect := `SELECT id, name, email, password, token, is_login, gender, address, phone, role, created_at, updated_at, deleted_at FROM users WHERE deleted_at IS NULL ` + queryWhere
 	sqlError := config.DbConn.Sql.QueryRow(querySelect).Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.Token, &user.IsLogin, &user.Gender, &user.Address, &user.Phone, &user.Role, &user.CreatedAt, &user.UpdatedAt, &user.DeletedAt)
 	if sqlError != nil {
 		return nil, sqlError

@@ -75,9 +75,8 @@ func Routes() *gin.Engine {
 
 	payment := v3noauth.Group("/payment")
 	{
-		payment.GET("/get", paymenthandler.GetPayment)
+		payment.GET("/get-by-user-id", paymenthandler.GetPaymentByUserId)
 		payment.DELETE("/delete-by-id", paymenthandler.DeletePaymentById)
-		payment.PUT("/update", paymenthandler.UpdatePaymentById)
 		payment.POST("/create", paymenthandler.CreatePayment)
 	}
 
