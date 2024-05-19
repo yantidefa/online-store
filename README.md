@@ -43,3 +43,7 @@ goose postgres "user=postgres dbname=online-store host=localhost port=5432 sslmo
 ### Down Migration
 goose postgres "user=postgres dbname=online-store host=localhost port=5432 sslmode=disable" down
 
+## Usage
+
+# Running the project
+./yourproject
