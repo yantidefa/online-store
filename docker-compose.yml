@@ -1,6 +1,7 @@
 version: '3.7'
 services: 
     online-store: 
+        image: online-store
         container_name: online-store
         build: .    
         ports:
@@ -8,3 +9,4 @@ services:
         env_file:
             - .env
         restart: always
+
