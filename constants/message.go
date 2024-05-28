@@ -27,6 +27,7 @@ var (
 	SuccessDeleteData    = "Successfully Deleted Data"
 	SuccessDownload      = "Successfully Download"
 	SuccessDisplayedData = "Successfully Displayed The Data"
+	SuccessLogin         = "Successfully Login"
 )
 
 var (

@@ -64,7 +64,11 @@ func Routes() *gin.Engine {
 		product.PUT("/update", producthandler.UpdateProductById)
 		product.POST("/create", producthandler.CreateProduct)
 	}
-	product.GET("/get", producthandler.GetProduct)
+	
+	productShop := v3noauth.Group("/product")
+	{
+		productShop.GET("/get", producthandler.GetProduct)
+	}
 
 	cart := v3noauth.Group("/cart").Use(midllewares.AuthenticationCustomer())
 	{

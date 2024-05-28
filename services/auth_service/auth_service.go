@@ -26,20 +26,19 @@ func RegisterCustomer(request models.User) (*models.User, error) {
 }
 
 func RegisterAdmin(request models.User) (*models.User, error) {
-	dataUser, err := usersrepository.GetUser("", request.Email, "")
+	request.Role = "Admin"
+	request.Token, _ = utilities.HashPassword(request.Password)
+	var createUser *models.User
+	_, err := usersrepository.GetUser("", request.Email, "")
 	if err != nil {
-		return nil, err
-	}
-	if dataUser.Email == request.Email {
+		createUser, err = usersrepository.CreateUser(request)
+		if err != nil {
+			return nil, err
+		}
+	} else {
 		return nil, errors.New(constants.ErrExistEmail)
 	}
 
-	request.Token, _ = utilities.HashPassword(request.Password)
-	request.Role = "Admin"
-	createUser, err := usersrepository.CreateUser(request)
-	if err != nil {
-		return nil, err
-	}
 
 	return createUser, nil
 }
@@ -82,7 +81,7 @@ func Logout(request models.Login) (int64, error) {
 		return 0, err
 	}
 
-	userIsLogin, errUserIsLogin := usersrepository.ChangeIsLogin(dataUser.ID.String(), dataUser.Token, true)
+	userIsLogin, errUserIsLogin := usersrepository.ChangeIsLogin(dataUser.ID.String(), dataUser.Token, false)
 	if errUserIsLogin != nil {
 		return userIsLogin, errUserIsLogin
 	}

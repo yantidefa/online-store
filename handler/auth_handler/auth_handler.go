@@ -49,10 +49,10 @@ func Login(c *gin.Context) {
 
 	data, err := authservice.Login(request)
 	if err != nil {
-		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
+		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.ErrFailedAuthentication, err)
 		return
 	} else {
-		utilities.SetResponseJSON(c, http.StatusOK, data, constants.SuccessAddData, err)
+		utilities.SetResponseJSON(c, http.StatusOK, data, constants.SuccessLogin, err)
 	}
 }
 func Logout(c *gin.Context) {
@@ -62,11 +62,11 @@ func Logout(c *gin.Context) {
 		return
 	}
 
-	data, err := authservice.Login(request)
+	data, err := authservice.Logout(request)
 	if err != nil {
-		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.FailedAddData, err)
+		utilities.SetResponseJSON(c, http.StatusBadRequest, nil, constants.ErrFailedAuthentication, err)
 		return
 	} else {
-		utilities.SetResponseJSON(c, http.StatusOK, data, constants.SuccessAddData, err)
+		utilities.SetResponseJSON(c, http.StatusOK, data, constants.ErrLogout, err)
 	}
 }

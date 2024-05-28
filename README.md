@@ -38,7 +38,7 @@ cd migrations
 goose postgres "user=postgres dbname=online_store host=localhost port=5432 password=0303 sslmode=disable" status
 
 ### Up Migration
-goose postgres "user=postgres dbname=online_store host=localhost port=5432 sslmode=disable" up
+goose postgres "user=postgres dbname=online_store host=localhost port=5432 password=0303 sslmode=disable" up
 
 ### Down Migration
 goose postgres "user=postgres dbname=online_store host=localhost port=5432 sslmode=disable" down
